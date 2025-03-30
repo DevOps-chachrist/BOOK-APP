@@ -142,7 +142,49 @@ class BookController extends Controller
                 DB::rollBack();
                 return response()->json([
                     "status" => "error",
-                    "message" => "Fail To Inser New Book",
+                    "message" => "Fail To Update Book",
+                    "user" => $e
+                ], 500);
+            }
+        } else {
+            return response()->json([
+                "status" => "error",
+                "message" => "Not Found Book Id " . $id,
+            ], 404);
+        }
+    }
+
+    public function update_partial(Request $request, $id){
+        $book = Book::where('id', $id)->first();
+
+        if ($book) {
+            DB::beginTransaction();
+
+            try {
+                $data = array_filter([
+                    'name' => $request->bookName ?? null,
+                    'category' => $request->category ?? null,
+                    'author' => $request->author ?? null
+                ],fn($value) => !is_null($value));
+
+
+
+                $book->update($data);
+
+                DB::commit();
+
+                return response()->json([
+                    "status" => "ok",
+                    "message" => "Update All Field Success",
+                    "data" => new BookResource($book),
+
+                ], 200);
+            } catch (Exception $e) {
+
+                DB::rollBack();
+                return response()->json([
+                    "status" => "error",
+                    "message" => "Fail To Update Book",
                     "user" => $e
                 ], 500);
             }
