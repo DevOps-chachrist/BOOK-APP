@@ -195,4 +195,34 @@ class BookController extends Controller
             ], 404);
         }
     }
+
+    public function delete($id){
+        $book = Book::where('id',$id)->first();
+
+        if($book){
+            DB::beginTransaction();
+            try{
+                $book->delete();
+                DB::commit();
+                return response()->json([
+                    "status" => "ok",
+                    "message" => "Delete Book ID Success ". $id ."Success",
+                ], 200);
+
+            }catch(Exception $e){
+                DB::rollBack();
+                return response()->json([
+                    "status" => "error",
+                    "message" => "Fail To Update Book",
+                    "user" => $e
+                ], 500);
+            }
+        }else{
+            return response()->json([
+                "status" => "error",
+                "message" => "Not Found Book Id " . $id,
+            ], 404);
+        }
+
+    }
 }

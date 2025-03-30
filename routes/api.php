@@ -38,9 +38,14 @@ Route::group(['prefix'=>'v1'], function(){
 
     Route::get('/books',[BookController::class,'index']);
     Route::get('/books/{id}',[BookController::class,'show']);
-    Route::post('/books',[BookController::class, 'store'])->middleware('auth:sanctum');
-    Route::put('/books/{id}',[BookController::class, 'update_all'])->middleware('auth:sanctum');
-    Route::patch('/books/{id}',[BookController::class, 'update_partial'])->middleware('auth:sanctum');
+
+
+    Route::middleware('auth:sanctum')->group(function(){
+        Route::post('/books',[BookController::class, 'store']);
+        Route::put('/books/{id}',[BookController::class, 'update_all']);
+        Route::patch('/books/{id}',[BookController::class, 'update_partial']);
+        Route::delete('/books/{id}', [BookController::class, 'delete']);
+    });
 
 });
 
