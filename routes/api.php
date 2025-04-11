@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\api\v1\AuthController;
 use App\Http\Controllers\api\v1\BookController;
+use App\Http\Controllers\api\v1\BorrowingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +46,8 @@ Route::group(['prefix'=>'v1'], function(){
         Route::put('/books/{id}',[BookController::class, 'update_all']);
         Route::patch('/books/{id}',[BookController::class, 'update_partial']);
         Route::delete('/books/{id}', [BookController::class, 'delete']);
+
+        Route::post('/borrow',[BorrowingController::class,'borrow']);
     });
 
 });
