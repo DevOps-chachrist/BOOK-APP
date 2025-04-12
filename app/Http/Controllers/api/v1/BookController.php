@@ -92,6 +92,14 @@ class BookController extends Controller
             ]);
 
             DB::commit();
+
+            return response()->json([
+                "status" => "ok",
+                "message" => "Insert New Book Successfully",
+                "data" => new BookResource($book),
+
+            ], 201);
+
         } catch (Exception $e) {
 
             DB::rollBack();
@@ -105,12 +113,7 @@ class BookController extends Controller
 
 
 
-        return response()->json([
-            "status" => "ok",
-            "message" => "Insert New Book Successfully",
-            "data" => new BookResource($book),
 
-        ], 201);
     }
 
     public function update_all(Request $request, $id)

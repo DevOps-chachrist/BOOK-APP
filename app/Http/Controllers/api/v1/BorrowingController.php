@@ -12,12 +12,20 @@ class BorrowingController extends Controller
         $bookId = $request->bookId;
         $userId = $request->user()->id;
 
+
+
         $borrow = Borrowing::create([
-            "book_" => $bookId,
+            "book_id" => $bookId,
             "user_id" => $userId,
-            "borrow_date" => now()
+            "borrow_date" => now(),
+            "return_date" => null
         ]);
 
-        return $userId;
+        return response()->json([
+            "status" => "ok",
+            "message" => "Borrow Successfully",
+            "data" => $borrow,
+
+        ], 201);
     }
 }

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('book_id');
             $table->unsignedBigInteger('user_id');
             $table->dateTime('borrow_date');
-            $table->dateTime('return_date');
+            $table->dateTime('return_date')->nullable();
             $table->boolean('status')->default(0);
             $table->timestamps();
 
