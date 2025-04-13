@@ -40,6 +40,8 @@ Route::group(['prefix'=>'v1'], function(){
     Route::get('/books',[BookController::class,'index']);
     Route::get('/books/{id}',[BookController::class,'show']);
 
+    Route::get('/borrowings',[BorrowingController::class, 'index']);
+
 
     Route::middleware('auth:sanctum')->group(function(){
         Route::post('/books',[BookController::class, 'store']);
@@ -48,6 +50,9 @@ Route::group(['prefix'=>'v1'], function(){
         Route::delete('/books/{id}', [BookController::class, 'delete']);
 
         Route::post('/borrow',[BorrowingController::class,'borrow']);
+        Route::post('/return', [BorrowingController::class, 'return_book']);
+
+
     });
 
 });
